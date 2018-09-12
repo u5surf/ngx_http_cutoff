@@ -26,10 +26,10 @@ static void *ngx_http_cutoff_filter_create_conf(ngx_conf_t *);
 
 static ngx_command_t ngx_http_cutoff_filter_commands[] = {
     { ngx_string("cutoff"),
-		  NGX_HTTP_SRV_CONF|NGX_CONF_FLAG,
-			ngx_conf_set_flag_slot,
+      NGX_HTTP_SRV_CONF|NGX_CONF_FLAG,
+      ngx_conf_set_flag_slot,
       NGX_HTTP_SRV_CONF_OFFSET,
-			offsetof(ngx_http_cutoff_filter_conf_t, enable),
+      offsetof(ngx_http_cutoff_filter_conf_t, enable),
       NULL
     },
     ngx_null_command
@@ -70,10 +70,10 @@ static ngx_int_t
 ngx_http_cutoff_body_filter(ngx_http_request_t *r, ngx_chain_t *in)
 {
     ngx_http_cutoff_filter_conf_t *conf;
-		conf = ngx_http_get_module_srv_conf(r, ngx_http_cutoff_filter_module);
-		if (!conf->enable) {
+    conf = ngx_http_get_module_srv_conf(r, ngx_http_cutoff_filter_module);
+    if (!conf->enable) {
         return ngx_http_next_body_filter(r, in);
-		}
+    }
 
     ngx_event_t *ngx_http_close_timer = ngx_pcalloc(r->pool, sizeof(ngx_event_t));
     ngx_http_close_timer->log = r->connection->log;
@@ -98,8 +98,8 @@ ngx_http_cutoff_filter_init(ngx_conf_t *cf)
 static void *
 ngx_http_cutoff_filter_create_conf(ngx_conf_t *cf) {
     ngx_http_cutoff_filter_conf_t *conf;
-		conf = ngx_pcalloc(cf->pool, sizeof(ngx_http_cutoff_filter_conf_t));
-		if (conf == NULL) {
+    conf = ngx_pcalloc(cf->pool, sizeof(ngx_http_cutoff_filter_conf_t));
+    if (conf == NULL) {
         return NULL;
     }
     conf->enable = NGX_CONF_UNSET;
@@ -112,7 +112,7 @@ ngx_http_cutoff_filter_merge_conf(ngx_conf_t *cf, void *parent, void *child)
     ngx_http_cutoff_filter_conf_t *prev = parent;
     ngx_http_cutoff_filter_conf_t *conf = child;
     ngx_conf_merge_value(conf->enable, prev->enable, 0);
-		return NGX_CONF_OK;
+    return NGX_CONF_OK;
 }
 
 static void
